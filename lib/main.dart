@@ -1,35 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'core/theme/app_theme.dart';
+import 'core/routes/app_routes.dart';
+import 'core/services/database_service.dart';
+import 'core/services/storage_service.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize services
+  await Get.putAsync(() => DatabaseService().init());
+  await Get.putAsync(() => StorageService().init());
+
+  runApp(const ToolivoApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class ToolivoApp extends StatelessWidget {
+  const ToolivoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Toolivo',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Toolivo')),
-      body: const Center(child: Text('Welcome to Toolivo!')),
+      theme: AppTheme.lightTheme,
+      initialRoute: AppRoutes.login,
+      getPages: AppRoutes.routes,
+      debugShowCheckedModeBanner: false,
     );
   }
 }

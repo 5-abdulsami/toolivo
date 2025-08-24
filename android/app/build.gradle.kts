@@ -8,11 +8,13 @@ plugins {
 android {
     namespace = "com.tiers.toolivo"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+        // Correct Kotlin DSL syntax for coreLibraryDesugaringEnabled
+        isCoreLibraryDesugaringEnabled = true
     }
 
     kotlinOptions {
@@ -41,4 +43,9 @@ android {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    // Correct Kotlin DSL syntax for coreLibraryDesugaring
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:1.2.2")
 }
